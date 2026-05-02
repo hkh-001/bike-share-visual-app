@@ -2,8 +2,8 @@
 
 基于 **HBuilderX + uni-app + Vue 3 + JavaScript** 的共享单车监控移动端，对接现有 FastAPI 后端。
 
-> **当前进度：M0 ✅ · M1 ✅ · M2 ✅ · M3 ✅ · M4 ✅**
-> 下一步：M5 AI 助手（非流式）。
+> **当前进度：M0 ✅ · M1 ✅ · M2 ✅ · M3 ✅ · M4 ✅ · M5 ✅**
+> 下一步：M6 设置与打包。
 
 ---
 
@@ -203,9 +203,9 @@ IPv4 地址 . . . . . . . . . . . . : 192.168.0.105
 
 ---
 
-## 九、下一步：Mobile M5
+## 九、下一步：Mobile M6
 
-M4 已完成（趋势分析：城市级 24h 可用车 / 占用率 / 告警数三张折线图，复用 `chart-line.vue` 原生 canvas 图表，60s 缓存 + 下拉刷新 + 手动刷新按钮）。下一步进入 M5 AI 助手（非流式）。
+M5 已完成（AI 助手：非流式 `POST /api/ai/chat` + Pinia store 持久化历史 + 推荐问题 + 健康检查 + 自动滚动到底）。下一步进入 M6 设置与打包。
 
 ### M2 关键说明
 
@@ -228,11 +228,20 @@ M4 已完成（趋势分析：城市级 24h 可用车 / 占用率 / 告警数三
 - **缓存策略**：`onShow` 进页面 60s 内不重复请求；下拉刷新 / 「刷新趋势」按钮强制 force；刷新失败时若已有旧数据，**保留图表** + 底部红色「点击重试」条，不白屏。
 - **`region_series` 暂不消费**：M4 仅渲染 `buckets`，区域级 Top3 趋势留给后续阶段。
 
-### M5 需求要点
+### M5 关键说明
 
-- 调用 `POST /api/ai/chat`（非流式，不做 SSE）
-- request body：`{ messages: [{ role, content }, ...], model: "kimi-k2.6" }`，**system prompt 由后端注入，移动端不要传**
-- 历史保存到 `uni.setStorageSync('ai_chat_history', ...)`，仅保留最近 10 条
-- `uni.request` timeout 调到 180000（kimi-k2.6 单次响应 30~120s）
-- 首版纯文本展示（保留 emoji / 换行），暂不解析 Markdown
-- 清空对话按钮 → `uni.removeStorageSync` + 重置状态
+- **接口**：`GET /api/ai/health` + `POST /api/ai/chat`，复用 `mobile/api/request.js`，**不引入 SSE / 流式**。`chat()` 默认 `timeout=180000`（kimi-k2.6 单次响应可能 30~120s，含工具调用）。
+- **API Key 安全**：apikey.txt 始终在后端，移动端 `mobile/api/ai.js` **永远不读取 / 不存储**任何 Key，Kimi 调用全部由 FastAPI 完成。
+- **上下文窗口**：`buildContext()` 仅取最近 10 条 `role=user/assistant`，**永不发送 `error` / `system`** 给后端 —— 错误气泡仅本地展示，避免污染后端会话。
+- **本地历史**：`uni.setStorageSync('bike-ai-chat-history')` 持久化最近 50 条；`onLoad` 自动加载，`clear()` 同步移除 storage。
+- **渲染策略**：纯文本 + emoji + 换行（`white-space: pre-wrap`），首版**不解析 Markdown / 不引入 mp-html**；自动滚动通过 `<scroll-view :scroll-into-view="msg-${id}">` 实现。
+- **健康检查**：`aiStatus: idle|checking|ok|unavailable|error`，依据 `res.ok && res.key_loaded` 判定可用性，状态卡支持手动重检。
+- **推荐问题**：消息为空且非加载中时展示 4 条预设（运行状态 / 优先处理 / 满桩风险 / 数据新鲜度），点击即发送。
+
+### M6 需求要点
+
+- 设置页完善：API 地址输入 + 测试连接（已在 M0 实现，可继续打磨）
+- Android APK 打包：HBuilderX → 发行 → 原生 App 云打包
+- 应用图标 / 启动图（`manifest.json`）
+- 后端状态指示器（启动时 `/api/health`，每 30s 复检）
+- 「清空 AI 对话历史」入口（亦可在 AI 页内完成）
