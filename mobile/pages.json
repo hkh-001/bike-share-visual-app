@@ -9,7 +9,10 @@
                 "navigationStyle": "custom",
                 "navigationBarTextStyle": "white",
                 "navigationBarBackgroundColor": "#0a0a0f",
-                "backgroundColor": "#0a0a0f"
+                "backgroundColor": "#0a0a0f",
+                "enablePullDownRefresh": true,
+                "backgroundColorTop": "#0a0a0f",
+                "backgroundTextStyle": "light"
             }
         },
         {
@@ -18,7 +21,11 @@
                 "navigationBarTitleText": "站点",
                 "navigationBarTextStyle": "white",
                 "navigationBarBackgroundColor": "#0a0a0f",
-                "backgroundColor": "#0a0a0f"
+                "backgroundColor": "#0a0a0f",
+                "enablePullDownRefresh": true,
+                "backgroundColorTop": "#0a0a0f",
+                "backgroundTextStyle": "light",
+                "onReachBottomDistance": 80
             }
         },
         {
@@ -27,7 +34,10 @@
                 "navigationBarTitleText": "站点详情",
                 "navigationBarTextStyle": "white",
                 "navigationBarBackgroundColor": "#0a0a0f",
-                "backgroundColor": "#0a0a0f"
+                "backgroundColor": "#0a0a0f",
+                "enablePullDownRefresh": true,
+                "backgroundColorTop": "#0a0a0f",
+                "backgroundTextStyle": "light"
             }
         },
         {
@@ -36,7 +46,11 @@
                 "navigationBarTitleText": "告警中心",
                 "navigationBarTextStyle": "white",
                 "navigationBarBackgroundColor": "#0a0a0f",
-                "backgroundColor": "#0a0a0f"
+                "backgroundColor": "#0a0a0f",
+                "enablePullDownRefresh": true,
+                "backgroundColorTop": "#0a0a0f",
+                "backgroundTextStyle": "light",
+                "onReachBottomDistance": 80
             }
         },
         {
@@ -45,7 +59,10 @@
                 "navigationBarTitleText": "趋势分析",
                 "navigationBarTextStyle": "white",
                 "navigationBarBackgroundColor": "#0a0a0f",
-                "backgroundColor": "#0a0a0f"
+                "backgroundColor": "#0a0a0f",
+                "enablePullDownRefresh": true,
+                "backgroundColorTop": "#0a0a0f",
+                "backgroundTextStyle": "light"
             }
         },
         {

@@ -1,9 +1,9 @@
-# BikeGuard 移动端 (Mobile M0)
+# BikeGuard 移动端
 
 基于 **HBuilderX + uni-app + Vue 3 + JavaScript** 的共享单车监控移动端，对接现有 FastAPI 后端。
 
-> **当前阶段：M0 项目骨架**。仅实现项目结构、设置管理、网络封装和后端 health 调通。
-> 站点 / 告警 / 趋势 / AI 等业务功能将在 M1+ 阶段陆续接入。
+> **当前进度：M0 ✅ · M1 ✅ · M2 ✅ · M3 ✅ · M4 ✅**
+> 下一步：M5 AI 助手（非流式）。
 
 ---
 
@@ -203,16 +203,36 @@ IPv4 地址 . . . . . . . . . . . . : 192.168.0.105
 
 ---
 
-## 九、下一步：Mobile M1
+## 九、下一步：Mobile M5
 
-完成 M0 后即可启动 M1 —— 首页 KPI 概览。
+M4 已完成（趋势分析：城市级 24h 可用车 / 占用率 / 告警数三张折线图，复用 `chart-line.vue` 原生 canvas 图表，60s 缓存 + 下拉刷新 + 手动刷新按钮）。下一步进入 M5 AI 助手（非流式）。
 
-需求要点：
-- 调用 `GET /api/dashboard/summary` 一次取全所有 KPI
-- 调用 `GET /api/etl/status` 显示数据新鲜度（fresh / stale / mock）
-- 4 个 KPI 卡片网格：总站点 / 活跃站点 / 可用车 / 可用桩
-- 风险概览条：空车 / 满桩 / 离线 / 异常 各几个
-- ETL 状态摘要：最近抓取时间 / 数据源
-- 下拉刷新支持
+### M2 关键说明
 
-启动 M1 时，请参考 `C:\Users\huang\.claude\plans\transient-orbiting-acorn.md` 的第八节。
+- **图表实现**：本阶段未引入 `qiun-data-charts` / `uCharts` 等第三方图表库，`mobile/components/chart-line.vue` 是基于 uni-app 原生 `<canvas>` 的轻量自封装组件，无需安装任何插件即可在 HBuilderX 中直接运行。
+- **接口契约稳定**：`chart-line.vue` 的 Props (`categories`、`series`、`loading`、`empty`、`height`、`canvasId`、`yFormatter`) 与 qiun-data-charts 保持兼容，后续如需升级，仅替换内部实现，调用方无需改动。
+- **客户端分页**：站点列表使用 `allStations → filteredStations → visibleStations` 三层结构，初始显示 50 条，触底再加载 50 条，避免 2400+ 站点全量渲染卡顿。
+- **风险筛选 vs 搜索**：风险 chips 通过后端 `?risk_type=` 参数筛选；名称 / 编码搜索为本地过滤，不发起网络请求。
+
+### M3 关键说明
+
+- **接口**：`GET /api/dashboard/alerts?mode=&level=&limit=` 一次请求最多 300 条，前端 `visibleCount` 初始 30，触底 +30，避免一次性 v-for 800+ 条卡顿。
+- **真实 vs Mock 隔离**：`mode=real|mock` 由后端按 `Station.source_system` 分流，前端绝不混合显示；Mock 模式下卡片有「演示数据」徽章，点击只 toast，不跳转真实站点详情。
+- **状态筛选**：M3 暂未在 UI 暴露状态筛选（后端 `status` 默认 `"open"`，已能覆盖主要场景）；如未来后端把 status 取值规范化，可直接在级别 chips 后追加一组状态 chips。
+
+### M4 关键说明
+
+- **接口**：`GET /api/dashboard/trends/24h`，复用 `mobile/api/request.js` 与 `chart-line.vue`，**不引入任何第三方图表库**。
+- **三张图同源**：可用车（cyan / 整数千分位）、平均占用率（amber / `0~1 → %`）、告警数（rose / 整数）共用同一份 `categories = buckets[].ts → 'HH:00'`，仅 series 数据 + yFormatter + color 不同。
+- **字段兼容**：`ts/timestamp/time`、`city_total_bikes/total_bikes/bikes_available/total_bikes_available`、`city_avg_occupancy/avg_occupancy_rate/occupancy_rate`、`alerts_count/alert_count/alerts` 均通过 `pickField` 兜底；缺失填 0 或 `--`，不会崩溃。
+- **缓存策略**：`onShow` 进页面 60s 内不重复请求；下拉刷新 / 「刷新趋势」按钮强制 force；刷新失败时若已有旧数据，**保留图表** + 底部红色「点击重试」条，不白屏。
+- **`region_series` 暂不消费**：M4 仅渲染 `buckets`，区域级 Top3 趋势留给后续阶段。
+
+### M5 需求要点
+
+- 调用 `POST /api/ai/chat`（非流式，不做 SSE）
+- request body：`{ messages: [{ role, content }, ...], model: "kimi-k2.6" }`，**system prompt 由后端注入，移动端不要传**
+- 历史保存到 `uni.setStorageSync('ai_chat_history', ...)`，仅保留最近 10 条
+- `uni.request` timeout 调到 180000（kimi-k2.6 单次响应 30~120s）
+- 首版纯文本展示（保留 emoji / 换行），暂不解析 Markdown
+- 清空对话按钮 → `uni.removeStorageSync` + 重置状态
