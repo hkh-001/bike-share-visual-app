@@ -1,0 +1,71 @@
+/**
+ * uni.scss
+ *
+ * 此文件只包含 SCSS 变量定义，会被 uni-app 编译器自动注入到所有
+ * <style lang="scss"> 块的开头。请勿在此处编写实际样式规则。
+ *
+ * 主题：暗色科技风（深空底 + 青色高亮）
+ */
+
+/* ===== 主色系 ===== */
+$bg-primary: #0a0a0f;
+$bg-card: #16161e;
+$bg-card-hover: #1c1c26;
+
+$border-default: rgba(255, 255, 255, 0.06);
+$border-emphasis: rgba(255, 255, 255, 0.15);
+
+$text-primary: #e5e7eb;
+$text-secondary: #9ca3af;
+$text-muted: #6b7280;
+$text-faint: #4b5563;
+
+$cyan-500: #00d4ff;
+$cyan-400: #22d3ee;
+$cyan-glow: rgba(0, 212, 255, 0.4);
+
+/* ===== 状态色 ===== */
+$success: #10b981;
+$success-bg: rgba(16, 185, 129, 0.08);
+$success-border: rgba(16, 185, 129, 0.2);
+
+$warning: #f59e0b;
+$warning-bg: rgba(245, 158, 11, 0.08);
+$warning-border: rgba(245, 158, 11, 0.2);
+
+$error: #ef4444;
+$error-bg: rgba(239, 68, 68, 0.08);
+$error-border: rgba(239, 68, 68, 0.2);
+
+$info: #3b82f6;
+
+/* ===== uni-ui 兼容变量（保留） ===== */
+$uni-color-primary: #00d4ff;
+$uni-color-success: #10b981;
+$uni-color-warning: #f59e0b;
+$uni-color-error: #ef4444;
+
+$uni-text-color: #e5e7eb;
+$uni-text-color-inverse: #0a0a0f;
+$uni-text-color-grey: #9ca3af;
+$uni-text-color-placeholder: #6b7280;
+$uni-text-color-disable: #4b5563;
+
+$uni-bg-color: #0a0a0f;
+$uni-bg-color-grey: #16161e;
+$uni-bg-color-hover: #1c1c26;
+$uni-bg-color-mask: rgba(0, 0, 0, 0.4);
+
+$uni-border-color: rgba(255, 255, 255, 0.08);
+
+$uni-spacing-row-sm: 10rpx;
+$uni-spacing-row-base: 20rpx;
+$uni-spacing-row-lg: 30rpx;
+
+$uni-spacing-col-sm: 8rpx;
+$uni-spacing-col-base: 16rpx;
+$uni-spacing-col-lg: 24rpx;
+
+$uni-font-size-sm: 22rpx;
+$uni-font-size-base: 28rpx;
+$uni-font-size-lg: 32rpx;

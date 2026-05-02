@@ -1,0 +1,106 @@
+{
+    "easycom": {
+        "autoscan": true
+    },
+    "pages": [
+        {
+            "path": "pages/index/index",
+            "style": {
+                "navigationStyle": "custom",
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#0a0a0f",
+                "backgroundColor": "#0a0a0f"
+            }
+        },
+        {
+            "path": "pages/stations/index",
+            "style": {
+                "navigationBarTitleText": "站点",
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#0a0a0f",
+                "backgroundColor": "#0a0a0f"
+            }
+        },
+        {
+            "path": "pages/stations/detail",
+            "style": {
+                "navigationBarTitleText": "站点详情",
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#0a0a0f",
+                "backgroundColor": "#0a0a0f"
+            }
+        },
+        {
+            "path": "pages/alerts/index",
+            "style": {
+                "navigationBarTitleText": "告警中心",
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#0a0a0f",
+                "backgroundColor": "#0a0a0f"
+            }
+        },
+        {
+            "path": "pages/trends/index",
+            "style": {
+                "navigationBarTitleText": "趋势分析",
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#0a0a0f",
+                "backgroundColor": "#0a0a0f"
+            }
+        },
+        {
+            "path": "pages/ai/index",
+            "style": {
+                "navigationBarTitleText": "AI 助手",
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#0a0a0f",
+                "backgroundColor": "#0a0a0f"
+            }
+        },
+        {
+            "path": "pages/settings/index",
+            "style": {
+                "navigationBarTitleText": "设置",
+                "navigationBarTextStyle": "white",
+                "navigationBarBackgroundColor": "#0a0a0f",
+                "backgroundColor": "#0a0a0f"
+            }
+        }
+    ],
+    "globalStyle": {
+        "navigationBarTextStyle": "white",
+        "navigationBarTitleText": "BikeGuard",
+        "navigationBarBackgroundColor": "#0a0a0f",
+        "backgroundColor": "#0a0a0f",
+        "backgroundColorTop": "#0a0a0f",
+        "backgroundColorBottom": "#0a0a0f"
+    },
+    "tabBar": {
+        "color": "#6b7280",
+        "selectedColor": "#00d4ff",
+        "backgroundColor": "#0a0a0f",
+        "borderStyle": "black",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "首页"
+            },
+            {
+                "pagePath": "pages/stations/index",
+                "text": "站点"
+            },
+            {
+                "pagePath": "pages/alerts/index",
+                "text": "告警"
+            },
+            {
+                "pagePath": "pages/trends/index",
+                "text": "趋势"
+            },
+            {
+                "pagePath": "pages/ai/index",
+                "text": "AI"
+            }
+        ]
+    }
+}
